@@ -1,4 +1,3 @@
-
 from datetime import datetime
 from typing import List, Optional
 from fastapi import FastAPI, HTTPException
@@ -16,17 +15,19 @@ class Memory(BaseModel):
     created_at: datetime
     updated_at: datetime
 
-app=FastAPI(
-    title="Memory service",
+app = FastAPI(
+    title="Memory Service",
     description="Memory service for storing and retrieving user memories",
     version="1.0.0"
 )
 
+
 memories_db: dict[str, Memory] = {}
+
 @app.get("/")
 async def root():
-    return{
-        "message": "Welcome to the memory service",
+    return {
+        "message": "Welcome to the Memory Service",
         "service": "memory-service",
         "version": "1.0.0"
     }
