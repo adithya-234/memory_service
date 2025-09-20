@@ -4,15 +4,16 @@ A simple service that allows users to store and retrieve personal memories. Thin
 
 ## Overview
 
-The Memory Service provides a lightweight solution for personal memory management. Users can:
-- **Store memories**: Add text-based memories with optional tags or categories
-- **Retrieve memories**: Search and find previously stored memories
-- **Organize**: Keep memories organized for easy retrieval
+The Memory Service is a FastAPI-based web service framework for personal memory management. Currently implemented features:
+- **Basic API setup**: FastAPI application with proper configuration
+- **Service information**: Root endpoint providing basic service details
+- **Documentation**: Auto-generated interactive API docs
 
 ## Features
 
-- Simple API for storing and retrieving memories
-- Search functionality to find specific memories
+- Basic FastAPI application setup
+- Root endpoint for service information
+- Interactive API documentation
 - Lightweight and fast
 - Easy to set up and use
 
@@ -59,9 +60,7 @@ Once running, visit:
 
 ### API Endpoints
 
-- `POST /memories` - Create a new memory
-- `GET /memories` - Get all memories
-- `GET /memories/{memory_id}` - Get a specific memory by ID
+- `GET /` - Root endpoint that returns service information
 
 ## Project Goals
 
