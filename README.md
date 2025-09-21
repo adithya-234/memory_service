@@ -50,13 +50,6 @@ Start the FastAPI server:
 uvicorn app.main:app --reload
 ```
 
-The API will be available at `http://localhost:8000`
-
-### API Documentation
-
-Once running, visit:
-- Interactive API docs: `http://localhost:8000/docs`
-- Alternative docs: `http://localhost:8000/redoc`
 
 ### API Endpoints
 
