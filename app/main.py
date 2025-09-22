@@ -1,8 +1,12 @@
+
 from fastapi import FastAPI, HTTPException, Query
 from pydantic import BaseModel
 from typing import Dict,Optional,List,Any
 from datetime import datetime
 import uuid 
+
+
+from fastapi import FastAPI
 
 
 VERSION = "1.0.0"
@@ -12,6 +16,7 @@ app = FastAPI(
     description="Memory service for storing and retrieving user memories",
     version=VERSION,
 )
+
 memories_store: Dict[str, Dict[str, Any]] = {}
 
 class Memory(BaseModel):
@@ -39,7 +44,6 @@ class MemoryResponse(BaseModel):
 
 
 
-
 @app.get("/")
 async def root():
     return {
@@ -47,6 +51,7 @@ async def root():
         "service": "memory-service",
         "version": VERSION,
     }
+
 
 @app.post("/memories", response_model=MemoryResponse)
 async def create_memory(memory: Memory):
