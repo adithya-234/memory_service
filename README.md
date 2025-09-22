@@ -4,16 +4,22 @@ A simple service that allows users to store and retrieve personal memories. Thin
 
 ## Overview
 
-The Memory Service is a FastAPI-based web service framework for personal memory management. Currently implemented features:
-- **Basic API setup**: FastAPI application with proper configuration
-- **Service information**: Root endpoint providing basic service details
+The Memory Service is a FastAPI-based web service for personal memory management. Features include:
+- **Memory Creation**: Store memories with content, tags, and automatic timestamp tracking
+- **Memory Retrieval**: Get specific memories by ID
+- **Health Check**: Monitor service status and memory count
+- **Service Information**: Root endpoint providing basic service details
 
 ## Features
 
-- Basic FastAPI application setup
-- Root endpoint for service information
+- Create and store memories with unique IDs
+- Retrieve memories by ID
+- Tag-based memory organization
+- Automatic timestamp tracking (created_at, updated_at)
+- Health check endpoint
+- In-memory storage for fast access
+- RESTful API design
 - Lightweight and fast
-- Easy to set up and use
 
 ## Getting Started
 
@@ -52,6 +58,9 @@ uvicorn app.main:app --reload
 ### API Endpoints
 
 - `GET /` - Root endpoint that returns service information
+- `POST /memories` - Create a new memory
+- `GET /memories/{memory_id}` - Retrieve a specific memory by ID
+- `GET /health` - Health check endpoint with service status
 
 ## Project Goals
 
