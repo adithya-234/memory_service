@@ -4,21 +4,54 @@ A simple service that allows users to store and retrieve personal memories. Thin
 
 ## Overview
 
-The Memory Service provides a lightweight solution for personal memory management. Users can:
-- **Store memories**: Add text-based memories with optional tags or categories
-- **Retrieve memories**: Search and find previously stored memories
-- **Organize**: Keep memories organized for easy retrieval
+The Memory Service is a FastAPI-based web service framework for personal memory management. Currently implemented features:
+- **Basic API setup**: FastAPI application with proper configuration
+- **Service information**: Root endpoint providing basic service details
 
 ## Features
 
-- Simple API for storing and retrieving memories
-- Search functionality to find specific memories
+- Basic FastAPI application setup
+- Root endpoint for service information
 - Lightweight and fast
 - Easy to set up and use
 
 ## Getting Started
 
-This project is in development. More instructions will be added as the service is built.
+### Prerequisites
+
+- Python 3.8+
+- pip
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd memory_service
+```
+
+2. Create a virtual environment:
+```bash
+python -m venv venv
+source venv/bin/activate
+```
+
+3. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+### Running the Application
+
+Start the FastAPI server:
+```bash
+uvicorn app.main:app --reload
+```
+
+
+### API Endpoints
+
+- `GET /` - Root endpoint that returns service information
 
 ## Project Goals
 
