@@ -7,13 +7,11 @@ A simple service that allows users to store and retrieve personal memories. Thin
 The Memory Service is a FastAPI-based web service framework for personal memory management. Currently implemented features:
 - **Basic API setup**: FastAPI application with proper configuration
 - **Service information**: Root endpoint providing basic service details
-- **Documentation**: Auto-generated interactive API docs
 
 ## Features
 
 - Basic FastAPI application setup
 - Root endpoint for service information
-- Interactive API documentation
 - Lightweight and fast
 - Easy to set up and use
 
