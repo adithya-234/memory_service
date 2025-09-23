@@ -1,8 +1,8 @@
-from fastapi import FastAPI, HTTPException, Query
-from pydantic import BaseModel
-from typing import Dict, Optional, List, Any
-from datetime import datetime
-import uuid
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel, Field
+from typing import Dict, Optional, Any
+from datetime import datetime, timezone
+from uuid import UUID, uuid4
 
 
 VERSION = "1.0.0"
@@ -13,28 +13,25 @@ app = FastAPI(
     version=VERSION,
 )
 
-memories_store: Dict[str, Dict[str, Any]] = {}
+memories_store: Dict[UUID, Dict[str, Any]] = {}
 
 
 class Memory(BaseModel):
-    id: Optional[str] = None
+    id: Optional[UUID] = None
     user_id: str
     content: str
-    tags: Optional[List[str]] = []
-    created_at: Optional[datetime] = None
-    updated_at: Optional[datetime] = None
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 
 class MemoryUpdate(BaseModel):
     content: Optional[str] = None
-    tags: Optional[List[str]] = None
 
 
 class MemoryResponse(BaseModel):
-    id: str
+    id: UUID
     user_id: str
     content: str
-    tags: Optional[List[str]]
     created_at: datetime
     updated_at: datetime
 
@@ -50,33 +47,22 @@ async def root():
 
 @app.post("/memories", response_model=MemoryResponse)
 async def create_memory(memory: Memory):
-    memory_id = str(uuid.uuid4())
-    now = datetime.utcnow()
+    memory_id = uuid4()
     memory_data = {
         "id": memory_id,
         "user_id": memory.user_id,
-        "tags": memory.tags or [],
         "content": memory.content,
-        "created_at": now,
-        "updated_at": now,
+        "created_at": memory.created_at,
+        "updated_at": memory.updated_at,
     }
     memories_store[memory_id] = memory_data
     return MemoryResponse(**memory_data)
 
 
 @app.get("/memories/{memory_id}", response_model=MemoryResponse)
-async def get_memory(memory_id: str):
+async def get_memory(memory_id: UUID):
     if memory_id not in memories_store:
         raise HTTPException(status_code=404, detail="Memory not found")
-    else:
-        return MemoryResponse(**memories_store[memory_id])
+    return MemoryResponse(**memories_store[memory_id])
 
 
-@app.get("/health")
-async def health_check():
-    return {
-        "status": "healthy",
-        "service": "memory-service",
-        "version": VERSION,
-        "total_memories": len(memories_store),
-    }
