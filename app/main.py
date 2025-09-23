@@ -24,9 +24,6 @@ class Memory(BaseModel):
     updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 
-class MemoryUpdate(BaseModel):
-    content: Optional[str] = None
-
 
 class MemoryResponse(BaseModel):
     id: UUID
