@@ -1,6 +1,6 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Header
 from pydantic import BaseModel, Field
-from typing import Dict, Optional, Any
+from typing import Dict, Optional, Any, Annotated
 from datetime import datetime, timezone
 from uuid import UUID, uuid4
 
@@ -16,18 +16,16 @@ app = FastAPI(
 memories_store: Dict[UUID, Dict[str, Any]] = {}
 
 
-class Memory(BaseModel):
-    id: Optional[UUID] = None
-    user_id: str
+class MemoryRequest(BaseModel):
     content: str
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    
+    
 
 
 
 class MemoryResponse(BaseModel):
     id: UUID
-    user_id: str
+    user_id: UUID
     content: str
     created_at: datetime
     updated_at: datetime
@@ -43,14 +41,14 @@ async def root():
 
 
 @app.post("/memories", response_model=MemoryResponse)
-async def create_memory(memory: Memory):
+async def create_memory(memory: MemoryRequest, user_id: Annotated[UUID , Header()]):
     memory_id = uuid4()
     memory_data = {
         "id": memory_id,
-        "user_id": memory.user_id,
+        "user_id": user_id,
         "content": memory.content,
-        "created_at": memory.created_at,
-        "updated_at": memory.updated_at,
+        "created_at": datetime.now(timezone.utc),
+        "updated_at": datetime.now(timezone.utc),
     }
     memories_store[memory_id] = memory_data
     return MemoryResponse(**memory_data)
