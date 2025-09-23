@@ -60,6 +60,14 @@ async def create_memory(memory: Memory):
 async def get_memory(memory_id: UUID):
     if memory_id not in memories_store:
         raise HTTPException(status_code=404, detail="Memory not found")
-    return MemoryResponse(**memories_store[memory_id])
+
+    memory_data = memories_store[memory_id]
+    return MemoryResponse(
+        id=memory_data["id"],
+        user_id=memory_data["user_id"],
+        content=memory_data["content"],
+        created_at=memory_data["created_at"],
+        updated_at=memory_data["updated_at"]
+    )
 
 
