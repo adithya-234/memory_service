@@ -1,6 +1,6 @@
 import pytest
 from fastapi.testclient import TestClient
-from app.main import app, memories_store
+from app.main import app, memory_service
 
 
 @pytest.fixture
@@ -11,4 +11,4 @@ def client():
 @pytest.fixture(autouse=True)
 def clear_memories_store():
     yield
-    memories_store.clear()
+    memory_service.clear_memories()

@@ -3,6 +3,7 @@ from pydantic import BaseModel, Field
 from typing import Dict, Optional, Any, Annotated
 from datetime import datetime, timezone
 from uuid import UUID, uuid4
+from .memory_service import MemoryService
 
 
 VERSION = "1.0.0"
@@ -13,24 +14,7 @@ app = FastAPI(
     version=VERSION,
 )
 
-memories_store: Dict[UUID, Dict[str, Any]] = {}
-
-
-def create_memory(user_id, content):
-    memory_id = uuid4()
-    memory_data = {
-        "id": memory_id,
-        "user_id": user_id,
-        "content": content,
-        "created_at": datetime.now(timezone.utc),
-        "updated_at": datetime.now(timezone.utc),
-    }
-    memories_store[memory_id] = memory_data
-    return memory_data
-
-
-def get_memory(memory_id):
-    return memories_store.get(memory_id)
+memory_service = MemoryService()
 
 
 class MemoryRequest(BaseModel):
@@ -59,13 +43,13 @@ async def root():
 
 @app.post("/memories", response_model=MemoryResponse)
 async def create_memory_endpoint(memory: MemoryRequest, user_id: Annotated[UUID , Header()]):
-    memory_data = create_memory(user_id, memory.content)
+    memory_data = memory_service.create_memory(user_id, memory.content)
     return MemoryResponse(**memory_data)
 
 
 @app.get("/memories/{memory_id}", response_model=MemoryResponse)
 async def get_memory_endpoint(memory_id: UUID):
-    memory_data = get_memory(memory_id)
+    memory_data = memory_service.get_memory(memory_id)
     if not memory_data:
         raise HTTPException(status_code=404, detail="Memory not found")
 
