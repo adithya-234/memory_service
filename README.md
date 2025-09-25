@@ -10,7 +10,8 @@ A simple FastAPI service that allows users to store and retrieve personal memori
 - **Service Information**: Root endpoint providing basic service details
 - **In-memory storage**: Fast access with UUID-based indexing
 - **RESTful API**: Clean API design with proper HTTP methods
-- **Testing Infrastructure**: Comprehensive test setup with pytest and fixtures
+- **Request Validation**: Structured MemoryRequest model for data validation
+- **Testing Infrastructure**: Comprehensive unit test suite with pytest and fixtures
 
 ## Getting Started
 

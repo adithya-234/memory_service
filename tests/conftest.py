@@ -10,6 +10,5 @@ def client():
 
 @pytest.fixture(autouse=True)
 def clear_memories_store():
-    memories_store.clear()
     yield
     memories_store.clear()
